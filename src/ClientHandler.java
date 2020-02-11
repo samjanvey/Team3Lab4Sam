@@ -21,6 +21,7 @@ import java.util.logging.Logger;
  * Everyone add your name:
  *
  * @author Kristina Mantha
+ * Sam Janvey
  */
 public class ClientHandler implements Runnable {
     

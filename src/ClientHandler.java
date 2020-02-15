@@ -11,6 +11,7 @@
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,6 +38,7 @@ public class ClientHandler implements Runnable {
         this.file = new File("src/app/File/DiaryFile");
         
     }
+
 //    
 //    @Override
 //    public void run() {
@@ -142,6 +144,6 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
-    
 }

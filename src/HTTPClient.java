@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * Everyone add your name:
@@ -22,11 +23,20 @@ import java.net.Socket;
  * Gregory Ramos
  */
 public class HTTPClient {
+    
+    private String requestType;
+    private String userInput;
 
     public HTTPClient() {
+        Scanner input = new Scanner(System.in);
+        
         System.out.println("HTTP Client is Started");
+        System.out.print("Which request type would you like? Please type GET or POST?");
+        requestType = input.nextLine();
         
-        
+        if(requestType.equals("POST")){
+            System.out.println("Since you selected POST, please type what you would like to add to the diary:");
+        }
 
         try {
             InetAddress serverInetAddress

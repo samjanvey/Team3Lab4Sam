@@ -10,6 +10,7 @@
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
@@ -27,9 +28,12 @@ import java.util.logging.Logger;
 public class ClientHandler implements Runnable {
     
     private final Socket socket;
+    protected File file;
     
     public ClientHandler(Socket socket) {
         this.socket = socket;
+        this.file = new File("src/app/File/DiaryFile");
+        
     }
     
     @Override
@@ -62,7 +66,10 @@ public class ClientHandler implements Runnable {
                         .append("<b>Welcome to my web server!</b><BR>")
                         .append("</html>");
                 sendResponse(socket, 200, responseBuffer.toString());
-            } else {
+            } else if(httpMethod.equals("POST")){
+                    
+                }
+                else {
                 System.out.println("The HTTP method is not recognized");
                 sendResponse(socket, 405, "Method not allowed");
             }

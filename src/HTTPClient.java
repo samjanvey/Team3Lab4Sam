@@ -28,7 +28,7 @@ public class HTTPClient {
         try {
             InetAddress serverInetAddress
                     = InetAddress.getByName("127.0.0.1");
-            Socket connection = new Socket(serverInetAddress, 80);
+            Socket connection = new Socket(serverInetAddress, 6000);
 
             try (OutputStream out = connection.getOutputStream();
                     BufferedReader in

@@ -21,6 +21,7 @@ import java.util.Scanner;
  *
  * @author Kristina Mantha
  * Gregory Ramos
+ * Sam Janvey
  */
 public class HTTPClient {
     
@@ -31,12 +32,6 @@ public class HTTPClient {
         Scanner input = new Scanner(System.in);
         
         System.out.println("HTTP Client is Started");
-        System.out.print("Which request type would you like? Please type GET or POST?");
-        requestType = input.nextLine();
-        
-        if(requestType.equals("POST")){
-            System.out.println("Since you selected POST, please type what you would like to add to the diary:");
-        }
 
         try {
             InetAddress serverInetAddress
@@ -47,12 +42,39 @@ public class HTTPClient {
                     BufferedReader in
                     = new BufferedReader(new InputStreamReader(
                                     connection.getInputStream()))) {
-                sendGet(out);
-                System.out.println(getResponse(in));
+                //sendGet(out);
+                //System.out.println(getResponse(in));
+                System.out.print("Which request type would you like? Please type GET or POST? ");
+                requestType = input.nextLine().toUpperCase();
+        
+                if(requestType.equals("POST")){
+                    System.out.println("Since you selected POST, please type what you would like to add to the diary: ");
+                    userInput = input.nextLine();
+                    System.out.println(userInput);
+                    sendPost(out, userInput);
+                    sendGet(out);
+                    System.out.println(getResponse(in));
+                }
+                else if(requestType.equals("GET")) {
+                    System.out.println("You selected GET. Here are the diary entries: ");
+                    sendGet(out);
+                    System.out.println(getResponse(in));
+                }
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+    
+    
+    private void sendPost(OutputStream out, String userInput) throws IOException {
+        try {
+            out.write("POST /default\r\n".getBytes());
+            out.write(userInput.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 
     private void sendGet(OutputStream out) {

@@ -12,18 +12,24 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /**
  *
  * @author GRamos
  * Chris Lefebvre
+ * Sam Janvey
  */
 public class Webserver {
+    
+    ArrayList<String> diaryEntry = new ArrayList<String>();
 
     public Webserver() {
         
            System.out.println("Webserver Started");
+           diaryEntry.add("Dear Diary, Today was a good day");
+           diaryEntry.add("Dear Diary, Today was a bad day");
            try (ServerSocket serverSocket = new ServerSocket(8080)) {
                while (true) {
                    System.out.println("Waiting for client request");
@@ -66,34 +72,22 @@ public class Webserver {
                String httpMethod = tokenizer.nextToken();
                
                if (httpMethod.equals("GET")) {
-                    System.out.println("Get method processed");
-                    String httpQueryString = tokenizer.nextToken();
-                    StringBuilder responseBuffer = new StringBuilder();
-                    responseBuffer
-               .append("<html><h1>WebServer Home Page.... </h1><br>")
-               .append("<b>Welcome to my web server!</b><BR>")
-               .append("</html>");
-                    sendResponse(socket, 200, responseBuffer.toString());
+                    System.out.println("Get method processed");                    
+                    sendResponse(socket, 200, diaryEntry.toString());
                 } 
                
                else if (httpMethod.equals("POST")){
-                   System.out.println("Get method processed");
-                   String httpQueryString = tokenizer.nextToken();
-                   StringBuilder responseBuffer = new StringBuilder();
-                   responseBuffer
-                           .append("<html><h1>WebServer</h1><br>")
-                           .append("<b>Welcome to my web server!</b><BR>")
-                           .append("</html>");
-                   sendResponse(socket, 200, responseBuffer.toString());
+                   System.out.println("Post method processed");
+                   String postBodyString = in.readLine();
+                   diaryEntry.add(postBodyString);
+                   System.out.println(diaryEntry);
                }
                
                else {
                     System.out.println("The HTTP method is not recognized");
                     sendResponse(socket, 405, "Method Not Allowed");
                 }
-               
-               String httpQueryString = tokenizer.nextToken();
-       
+                      
            } catch (Exception e) {
                e.printStackTrace();
            }

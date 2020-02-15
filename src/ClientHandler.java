@@ -25,6 +25,7 @@ import java.util.logging.Logger;
  * @author Kristina Mantha
  * Sam Janvey
  * Chris Lefebvre
+ * Gregory Ramos
  */
 public class ClientHandler implements Runnable {
     

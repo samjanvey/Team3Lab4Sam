@@ -19,16 +19,19 @@ import java.net.Socket;
  * Everyone add your name:
  *
  * @author Kristina Mantha
+ * Gregory Ramos
  */
 public class HTTPClient {
 
     public HTTPClient() {
         System.out.println("HTTP Client is Started");
+        
+        
 
         try {
             InetAddress serverInetAddress
                     = InetAddress.getByName("127.0.0.1");
-            Socket connection = new Socket(serverInetAddress, 6000);
+            Socket connection = new Socket(serverInetAddress, 8080);
 
             try (OutputStream out = connection.getOutputStream();
                     BufferedReader in

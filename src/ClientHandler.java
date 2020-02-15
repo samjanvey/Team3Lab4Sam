@@ -11,6 +11,7 @@
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -69,16 +70,16 @@ public class ClientHandler implements Runnable {
                 sendResponse(socket, 200, responseBuffer.toString());
             } else if(httpMethod.equals("POST")){
                 System.out.println("POST Method Recieved");
-                String httpPostString = tokenizer.nextToken();
+                String httpQueryString = tokenizer.nextToken();
                 String diaryEntry = in.readLine();
-                writeToDiary(diaryEntry);        
-                
-//                StringBuilder responseBuffer = new StringBuilder();
-//                responseBuffer
-//                        .append("<html><h1>WebServer Home Page.... </h1><br>")
-//                        .append("<b>Welcome to my web server!</b><BR>")
-//                        .append("</html>");
-//                sendResponse(socket, 200, responseBuffer.toString());
+                writeToDiary(diaryEntry);            
+                StringBuilder responseBuffer = new StringBuilder();
+                responseBuffer
+                        .append("<html><h1>WebServer Diary Page.... </h1><br>")
+                        .append("<b>The Diary has been updated r!</b><BR>")
+                        .append("</html>");
+                sendResponse(socket, 200, responseBuffer.toString());
+                readDiary();    //not sure if this will work as intended
                 }
                 else {
                 System.out.println("The HTTP method is not recognized");
@@ -99,9 +100,7 @@ public class ClientHandler implements Runnable {
             
             if (statusCode == 200) {
                 statusLine = "HTTP/1.0 200 OK" + "\r\n";
-                String contentLengthHeader = "Content-Length: "
-                        + responseString.length() + "\r\n";
-                
+                String contentLengthHeader = "Content-Length: " + responseString.length() + "\r\n";              
                 out.writeBytes(statusLine);
                 out.writeBytes(serverHeader);
                 out.writeBytes(contentTypeHeader);
@@ -132,10 +131,20 @@ public class ClientHandler implements Runnable {
 //           fw.close();    //closes data stream permentantly
            fw.append(txt + "\r\n");//append is newer format over write
   
-        }catch (IOException ex){
-            
-        }
-        
+        }catch (IOException ex){            
+            }        
     }
-    
+    public void readDiary(){
+        try{
+            int i;
+            FileReader fr = new FileReader(file);
+            System.out.println("Attempting to read diary");
+            while((i = fr.read())!=-1)  //not sure if this will work, taken from example on line
+            System.out.print((char)i);
+            fr.close();
+                    
+
+        }catch (IOException ex){            
+            }        
+    }
 }

@@ -11,6 +11,7 @@
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
@@ -67,7 +68,17 @@ public class ClientHandler implements Runnable {
                         .append("</html>");
                 sendResponse(socket, 200, responseBuffer.toString());
             } else if(httpMethod.equals("POST")){
-                    
+                System.out.println("POST Method Recieved");
+                String httpPostString = tokenizer.nextToken();
+                String diaryEntry = in.readLine();
+                writeToDiary(diaryEntry);        
+                
+//                StringBuilder responseBuffer = new StringBuilder();
+//                responseBuffer
+//                        .append("<html><h1>WebServer Home Page.... </h1><br>")
+//                        .append("<b>Welcome to my web server!</b><BR>")
+//                        .append("</html>");
+//                sendResponse(socket, 200, responseBuffer.toString());
                 }
                 else {
                 System.out.println("The HTTP method is not recognized");
@@ -110,6 +121,21 @@ public class ClientHandler implements Runnable {
         } catch (IOException ex) {
             
         }
+    }
+    
+    
+    public void writeToDiary(String txt){
+        try{
+           FileWriter fw = new FileWriter(file); 
+//           fw.write ("This is the Diary of Team 3.");
+//           fw.flush();    //writes content of buffer to destination and emptys buffer(does not close stream, can still write)
+//           fw.close();    //closes data stream permentantly
+           fw.append(txt + "\r\n");//append is newer format over write
+  
+        }catch (IOException ex){
+            
+        }
+        
     }
     
 }

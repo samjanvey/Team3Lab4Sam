@@ -24,7 +24,7 @@ public class Webserver {
     public Webserver() {
         
            System.out.println("Webserver Started");
-           try (ServerSocket serverSocket = new ServerSocket()) {
+           try (ServerSocket serverSocket = new ServerSocket(8080)) {
                while (true) {
                    System.out.println("Waiting for client request");
                    Socket remote = serverSocket.accept();
